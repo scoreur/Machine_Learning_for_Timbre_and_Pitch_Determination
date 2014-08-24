@@ -22,19 +22,36 @@ clc;
 
 %% Loading data
 
-X = [1, 1; 1, 2; 1, 3; 1, 4; 2, 1; 2, 2; 2, 3; 2, 4; 3, 1; 3, 2; 3, 3; 3, 4];
-y = [0; 1; 1; 1; 0; 0; 1; 1; 0; 1; 1; 1];
-tmp = X(:, 1) .* X(:, 2);
-X = [X, tmp];
+load('data_test.mat');
 
 %% Normalization
 
 X = normalization(X);
 
-%% Train the neural network
+%% Creating the cross validation set
 
-neural_network(X, y);
+X1 = X(1, :);
+X2 = X(2, :);
+y1 = y(1);
+y2 = y(2);
+for i=3:5000,
+    if(rand()<0.8),
+        X1 = [X1; X(i, :)];
+        y1 = [y1; y(i)];
+    else,
+        X2 = [X2; X(i, :)];
+        y2 = [y2; y(i)];
+    end;
+end;
 
-%% Test the hypothesis on the test set
+X = X1;
+y = y1;
+
+%% Training the neural network
+
+%X2=X ; y2=y;
+neural_network(X, X2, y, y2);
+
+%% Testing the hypothesis on the test set
 
 
