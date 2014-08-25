@@ -3,6 +3,7 @@
 %
 %  All the files needed other than this one are listed below:
 %
+%     correct_ratio.m
 %     cost_function.m
 %     feedforward.m
 %     gradient.m
@@ -18,24 +19,26 @@ clear;
 close all;
 clc;
 
-%% Setup the parameters
-
 %% Loading data
 
-load('data_test.mat');
+fprintf('Loading data...\n');
+load('training_data.mat');
 
 %% Normalization
 
+fprintf('Normalizing the input data...\n');
 X = normalization(X);
 
 %% Creating the cross validation set
 
-X1 = X(1, :);
-X2 = X(2, :);
-y1 = y(1);
-y2 = y(2);
-for i=3:5000,
-    if(rand()<0.8),
+fprintf('Dividing the raw input into training set and cross validation set...\n');
+X1 = [];
+X2 = [];
+y1 = [];
+y2 = [];
+m = size(X, 1);
+for i=1:m,
+    if(rand()<0.75),
         X1 = [X1; X(i, :)];
         y1 = [y1; y(i)];
     else,
@@ -44,14 +47,8 @@ for i=3:5000,
     end;
 end;
 
-X = X1;
-y = y1;
-
 %% Training the neural network
 
-%X2=X ; y2=y;
-neural_network(X, X2, y, y2);
-
-%% Testing the hypothesis on the test set
-
-
+fprintf('Training the neural network...\n');
+performance = neural_network(X1, X2, y1, y2);
+fprintf('\nAfter training, correct ratio on cross validation set is %f%%.\n', performance * 100);
