@@ -25,8 +25,8 @@ for it=1:It,
         performance = correct_ratio(X_cv, y_cv, m_cv, n1, n2, n3, theta);
         fprintf('After %d iterations, cost on cross validation set is %f, correct ratio on cross validation set is %f%%.\n', ...
             it, cost_function(X_cv, y_cv, m_cv, n1, n2, n3, theta, lambda), performance * 100);
+        save parameter_theta Theta1 Theta2
     end;
 end;
-
 
 end

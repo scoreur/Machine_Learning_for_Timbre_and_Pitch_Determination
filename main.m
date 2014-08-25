@@ -7,9 +7,11 @@
 %     cost_function.m
 %     feedforward.m
 %     gradient.m
+%     ml_data_preprocessing.m
 %     neural_network.m
 %     normalization.m
 %     numerical_gradient.m
+%     principal_component_analysis.m
 %     sigmoid.m
 %     sigmoid_gradient.m
 %
@@ -22,12 +24,18 @@ clc;
 %% Loading data
 
 fprintf('Loading data...\n');
-load('training_data.mat');
+%load('training_data.mat');
+load('data_test.mat');
 
 %% Normalization
 
 fprintf('Normalizing the input data...\n');
 X = normalization(X);
+
+%% Principal Component Analysis
+
+fprintf('Reducing dimensionality...\n');
+X = principal_component_analysis(X);
 
 %% Creating the cross validation set
 
